@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfoActivity">
+<com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/appbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints">
+    <androidx.appcompat.widget.Toolbar
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.appcompat.widget.Toolbar>
+</com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_below="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/showinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TableRow
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Time"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:gravity="left"
+                            android:id="@+id/infotime"
+                            android:padding="5dp"
+                            android:textSize="20sp"
+                            android:text="00:00"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </TableRow>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TableRow
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Subject"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/infosubject"
+                            android:padding="5dp"
+                            android:layout_weight="2"
+                            android:textSize="20sp"
+                            android:text="Subject"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </TableRow>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TableRow
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Type"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/infotype"
+                            android:padding="5dp"
+                            android:textSize="20sp"
+                            android:text="Type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </TableRow>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TableRow
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Room"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/inforoom"
+                            android:padding="5dp"
+                            android:textSize="20sp"
+                            android:text="Room"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </TableRow>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TableRow
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Teacher"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/infoteacher"
+                            android:padding="5dp"
+                            android:textSize="20sp"
+                            android:text="Teacher"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </TableRow>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TableRow
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Contact No."
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/infocontact"
+                            android:padding="5dp"
+                            android:textSize="20sp"
+                            android:text="Contact No."
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <ImageButton
+                            android:layout_gravity="center_vertical"
+                            android:id="@+id/call"
+                            android:src="@drawable/ic_baseline_call_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </TableRow>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+                <TableRow
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Notes"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/infonote"
+                            android:padding="5dp"
+                            android:textSize="20sp"
+                            android:text="Note"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</RelativeLayout>
