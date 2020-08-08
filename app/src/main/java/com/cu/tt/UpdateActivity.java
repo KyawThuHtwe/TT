@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -25,19 +27,26 @@ public class UpdateActivity extends AppCompatActivity {
     public TextView start,end,startview,endview;
     public TextInputEditText subject,type,room,teacher,contact,note;
     public String title,id;
-    public String edit="insert";
+    public TextView day;
+    public LinearLayout update;
+    public ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
         myDb=new DataBaseHelper(this);
-        Toolbar toolbar=findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         Intent intent=getIntent();
         title=intent.getStringExtra("Day");
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        day=findViewById(R.id.day);
+        day.setText(title);
 
+        back=findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         startview=findViewById(R.id.startview);
         endview=findViewById(R.id.endview);
         subject=findViewById(R.id.subject);
@@ -46,6 +55,27 @@ public class UpdateActivity extends AppCompatActivity {
         teacher=findViewById(R.id.teacher);
         contact=findViewById(R.id.contact);
         note=findViewById(R.id.note);
+
+        update=findViewById(R.id.update);
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=getIntent();
+                id=intent.getStringExtra("Id");
+                Boolean result=myDb.updateData(id,startview.getText().toString(),endview.getText().toString(),
+                        subject.getText().toString(),type.getText().toString(),room.getText().toString(),
+                        teacher.getText().toString(),contact.getText().toString(),note.getText().toString());
+                if(result==true){
+                    Toast.makeText(getApplicationContext(),"Successful",Toast.LENGTH_SHORT).show();
+                    Intent intent1=new Intent(getApplicationContext(),MainActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent1);
+                    finish();
+                }else {
+                    Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         String starttext=intent.getStringExtra("Start");
         String endtext=intent.getStringExtra("End");
@@ -99,37 +129,9 @@ public class UpdateActivity extends AppCompatActivity {
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
     }
-
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menuupdate,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                finish();
-            case R.id.update:
-                //Update
-                Intent intent=getIntent();
-                id=intent.getStringExtra("Id");
-                Boolean result=myDb.updateData(id,startview.getText().toString(),endview.getText().toString(),
-                        subject.getText().toString(),type.getText().toString(),room.getText().toString(),
-                        teacher.getText().toString(),contact.getText().toString(),note.getText().toString());
-                if(result==true){
-                    Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
-                    Intent intent1=new Intent(getApplicationContext(),MainActivity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent1);
-                    finish();
-                }else {
-                    Toast.makeText(this,"Fail",Toast.LENGTH_SHORT).show();
-                }
-                return result;
-        }
-        return super.onOptionsItemSelected(item);
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

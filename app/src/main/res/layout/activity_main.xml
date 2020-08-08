@@ -5,32 +5,39 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:background="@color/detail"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/colorPrimaryDark">
-        <TextView
-            android:paddingLeft="5dp"
-            android:textColor="@android:color/white"
-            android:layout_centerVertical="true"
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"/>
-        <TextView
-            android:paddingLeft="8dp"
-            android:layout_below="@+id/time"
-            android:textColor="@android:color/white"
-            android:layout_centerVertical="true"
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"/>
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <TextView
+                android:textColor="@color/colorPrimaryDark"
+                android:paddingLeft="5dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"/>
+            <TextView
+                android:textColor="@color/colorPrimaryDark"
+                android:paddingLeft="8dp"
+                android:layout_below="@+id/time"
+                android:layout_centerVertical="true"
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"/>
 
-    </RelativeLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
    <TabHost
+       android:background="@color/detail"
        android:id="@+id/tabhost"
        android:layout_width="fill_parent"
        android:layout_height="fill_parent">

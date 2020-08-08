@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -26,20 +28,25 @@ public class AddActivity extends AppCompatActivity {
     public TextView start,end,startview,endview;
     public TextInputEditText subject,type,room,teacher,contact,note;
     public String title,id;
-    public String edit="insert";
-
+    public TextView day;
+    public LinearLayout save;
+    public ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         myDb=new DataBaseHelper(this);
-        Toolbar toolbar=findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         Intent intent=getIntent();
         title=intent.getStringExtra("Day");
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        day=findViewById(R.id.day);
+        day.setText(title);
+        back=findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         startview=findViewById(R.id.startview);
         endview=findViewById(R.id.endview);
         subject=findViewById(R.id.subject);
@@ -48,31 +55,24 @@ public class AddActivity extends AppCompatActivity {
         teacher=findViewById(R.id.teacher);
         contact=findViewById(R.id.contact);
         note=findViewById(R.id.note);
-
-        String starttext=intent.getStringExtra("Start");
-        String endtext=intent.getStringExtra("End");
-        String subjecttext=intent.getStringExtra("Subject");
-        String typetext=intent.getStringExtra("Type");
-        String roomtext=intent.getStringExtra("Room");
-        String teachertext=intent.getStringExtra("Teacher");
-        String contacttext=intent.getStringExtra("Contact");
-        String notetext=intent.getStringExtra("Note");
-
-
-        startview.setText(starttext);
-        endview.setText(endtext);
-        subject.setText(subjecttext);
-        type.setText(typetext);
-        room.setText(roomtext);
-        teacher.setText(teachertext);
-        contact.setText(contacttext);
-        note.setText(notetext);
-        if(startview.getText().equals("")){
-            startview.setText("00:00");
-        }
-        if(endview.getText().equals("")){
-            endview.setText("00:00");
-        }
+        save=findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (subject.getText().toString().equals("")||type.getText().toString().equals("")||
+                        room.getText().toString().equals("")||teacher.getText().toString().equals("")||
+                        contact.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(),"Please Fill Empty,Not Insert!!!",Toast.LENGTH_SHORT).show();
+                   }else {
+                    Intent intent = getIntent();
+                    title = intent.getStringExtra("Day");
+                    insertDatabase(startview.getText().toString(), endview.getText().toString(),
+                            subject.getText().toString(), type.getText().toString(),
+                            room.getText().toString(), teacher.getText().toString(),
+                            contact.getText().toString(), note.getText().toString(), title);
+                }
+            }
+        });
 
         start=findViewById(R.id.start);
         end=findViewById(R.id.end);
@@ -104,30 +104,6 @@ public class AddActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                finish();
-            case R.id.save:
-                Intent intent=getIntent();
-                title=intent.getStringExtra("Day");
-
-                    insertDatabase(startview.getText().toString(),endview.getText().toString(),
-                            subject.getText().toString(),type.getText().toString(),
-                            room.getText().toString(),teacher.getText().toString(),
-                            contact.getText().toString(),note.getText().toString(),title);
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public boolean insertDatabase(String from, String to,String subject,String type,String room,String teacher,String contact,String note,String day){
         boolean result=myDb.insertData(from,to,subject,type,room,teacher,contact,note,day);
         if(result==true){
@@ -140,5 +116,10 @@ public class AddActivity extends AppCompatActivity {
             Toast.makeText(this,"Fail",Toast.LENGTH_SHORT).show();
         }
         return result;
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

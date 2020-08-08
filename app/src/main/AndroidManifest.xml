@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpdateActivity"></activity>
+        <activity android:name=".AlarmActivity"></activity>
+        <activity android:name=".UpdateActivity" />
         <activity
             android:name=".InfoActivity"
             android:theme="@style/FullscreenTheme" />
@@ -30,8 +31,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <receiver android:name=".Alarm.AlarmReceiver" />
+
+        <service
+            android:name=".Alarm.AlarmService"
+            android:enabled="true" />
+    </application>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

@@ -47,6 +47,11 @@ public class FriActvity extends AppCompatActivity {
         super.onStart();
         dataLoad();
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     public void dataLoad(){
         ArrayList<MyListData> myListData = new ArrayList<>();

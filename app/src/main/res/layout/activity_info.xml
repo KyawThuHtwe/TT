@@ -4,21 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/detail"
     tools:context=".InfoActivity">
-<com.google.android.material.appbar.AppBarLayout
-    android:id="@+id/appbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:ignore="MissingConstraints">
-    <androidx.appcompat.widget.Toolbar
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:id="@+id/toolbar"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/appbar"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginBottom="5dp"
+            android:id="@+id/close"
+            android:background="@drawable/bg"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_baseline_close_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="18sp"
+                android:layout_gravity="center_vertical"
+                android:text="Close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:padding="5dp"
+                android:background="@drawable/bgrd"
+                android:gravity="center_vertical|center"
+                android:id="@+id/day"
+                android:textSize="20sp"
+                android:text="Day"
+                android:layout_width="120dp"
+                android:layout_height="120dp"/>
+            <TextView
+                android:padding="5dp"
+                android:gravity="center_vertical|center"
+                android:id="@+id/start"
+                android:textSize="20sp"
+                android:text="00:00"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+            <TextView
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:text="-"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:gravity="center"
+                android:id="@+id/end"
+                android:textSize="20sp"
+                android:text="00:00"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+        </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-    </androidx.appcompat.widget.Toolbar>
-</com.google.android.material.appbar.AppBarLayout>
     <LinearLayout
+        android:background="@color/detail"
         android:orientation="vertical"
         android:layout_below="@+id/appbar"
         android:layout_width="match_parent"
@@ -38,60 +99,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TableRow
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="130dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="left|center_vertical"
+                        <ImageView
                             android:padding="5dp"
-                            android:text="Time"
-                            android:textSize="20sp" />
-                        <TextView
-                            android:layout_marginLeft="10dp"
-                            android:gravity="left"
-                            android:id="@+id/infotime"
-                            android:padding="5dp"
-                            android:textSize="20sp"
-                            android:text="00:00"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_baseline_subject_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                </TableRow>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
-                <TableRow
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
                         <TextView
-                            android:layout_width="130dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
                             android:text="Subject"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                         <TextView
-                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/infosubject"
                             android:padding="5dp"
                             android:layout_weight="2"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:text="Subject"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
@@ -102,26 +137,34 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
                 <TableRow
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
+                        <ImageView
+                            android:padding="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_baseline_merge_type_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
                         <TextView
-                            android:layout_width="130dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
                             android:text="Type"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                         <TextView
-                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/infotype"
                             android:padding="5dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:text="Type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
@@ -132,26 +175,33 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
                 <TableRow
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:padding="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_baseline_room_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
                         <TextView
-                            android:layout_width="130dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
                             android:text="Room"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                         <TextView
-                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/inforoom"
                             android:padding="5dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:text="Room"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
@@ -163,26 +213,33 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
                 <TableRow
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:padding="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_baseline_account_circle_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
                         <TextView
-                            android:layout_width="130dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
                             android:text="Teacher"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                         <TextView
-                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/infoteacher"
                             android:padding="5dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:text="Teacher"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
@@ -193,27 +250,34 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
                 <TableRow
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:padding="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_baseline_contact_phone_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
                         <TextView
-                            android:layout_width="130dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
-                            android:text="Contact No."
-                            android:textSize="20sp" />
+                            android:text="Contact"
+                            android:textSize="18sp" />
                         <TextView
-                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/infocontact"
                             android:padding="5dp"
-                            android:textSize="20sp"
-                            android:text="Contact No."
+                            android:textSize="18sp"
+                            android:text="Contact"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <ImageButton
@@ -229,26 +293,33 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
                 <TableRow
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:padding="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_baseline_note_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
                         <TextView
-                            android:layout_width="130dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
                             android:text="Notes"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
                         <TextView
-                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/infonote"
                             android:padding="5dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:text="Note"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>

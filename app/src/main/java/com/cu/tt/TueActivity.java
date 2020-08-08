@@ -41,6 +41,11 @@ public class TueActivity extends AppCompatActivity {
         dataLoad();
 
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     @Override
     protected void onStart() {

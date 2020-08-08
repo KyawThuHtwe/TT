@@ -49,6 +49,12 @@ public class MonActivity extends AppCompatActivity {
         dataLoad();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     public void dataLoad(){
         ArrayList<MyListData> myListData = new ArrayList<>();
         try {
