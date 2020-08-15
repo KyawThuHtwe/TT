@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,20 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.cu.tt.R.layout.votes_layout;
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     ArrayList<MyListData> myListData;
@@ -45,8 +37,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
         View view=layoutInflater.inflate(R.layout.custom_layout,parent,false);
-        ViewHolder viewHolder=new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -210,7 +201,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 DatePicker datePicker = new DatePicker(context);
                                 DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-                                boolean result = dataBaseHelper.insertRollcall(datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear(), myListData.get(position).getSubject() + "", "1", myListData.get(position).getDay(), myListData.get(position).getId());
+                                boolean result = dataBaseHelper.insertRollCall(datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear(), myListData.get(position).getSubject() + "", "1", myListData.get(position).getDay(), myListData.get(position).getId());
                                 if (result) {
                                     Intent intent=new Intent(context.getApplicationContext(),MainActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -248,12 +239,11 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
 
     public String time(String time){
-        int hr = 0,min=0;
-        String s=null,des=null;
+        int hr = 0,min;
+        String s=null,des;
         try {
             hr=Integer.parseInt(time.split(":")[0]);
             min=Integer.parseInt(time.split(":")[1].replaceAll("\\D+","").replaceAll("^0+",""));
-            des=null;
             s=min+"";
             if(s.length()==1){
                 s="0"+s;
@@ -266,17 +256,15 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
 
         }catch (NumberFormatException nfe){
-            Toast.makeText(context,nfe.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,nfe.getMessage(),Toast.LENGTH_SHORT).show();
             if(s==null){
                 s="00";
             }
-            if (des==null){
-                if(hr>12){
-                    hr-=12;
-                    des=" PM";
-                }else {
-                    des=" AM";
-                }
+            if(hr>12){
+                hr-=12;
+                des=" PM";
+            }else {
+                des=" AM";
             }
         }
 
@@ -289,7 +277,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return myListData.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public LinearLayout infobtnlayout,editbtnlayout,deletebtnlayout;
         public CardView showinfo;
@@ -316,13 +304,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             this.alldetail=itemView.findViewById(R.id.alldetail);
             this.pid=itemView.findViewById(R.id.pid);
             this.idlayout=itemView.findViewById(R.id.idlayout);
-        }
-        public void votes(){
-            View view=LayoutInflater.from(context).inflate(votes_layout,(ViewGroup)itemView.findViewById(R.id.custom_layout));
-            Toast toast=Toast.makeText(context,"",Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER,0,0);
-            toast.setView(view);
-            toast.show();
         }
     }
 }

@@ -1,16 +1,10 @@
 package com.cu.tt;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,10 +12,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -96,6 +91,7 @@ public class AddActivity extends AppCompatActivity {
         int hr=c.get(Calendar.HOUR_OF_DAY);
         int min=c.get(Calendar.MINUTE);
         TimePickerDialog timePickerDialog=new TimePickerDialog(this, AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 time.setText(i+":"+i1);
@@ -105,9 +101,9 @@ public class AddActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-    public boolean insertDatabase(String from, String to,String subject,String type,String room,String teacher,String contact,String note,String day){
+    public void insertDatabase(String from, String to, String subject, String type, String room, String teacher, String contact, String note, String day){
         boolean result=myDb.insertData(from,to,subject,type,room,teacher,contact,note,day);
-        if(result==true){
+        if(result){
             Toast.makeText(getApplicationContext(),"Insert successful",Toast.LENGTH_SHORT).show();
             Intent intent1=new Intent(getApplicationContext(),MainActivity.class);
             intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -117,7 +113,6 @@ public class AddActivity extends AppCompatActivity {
         }else {
             Toast.makeText(this,"Fail",Toast.LENGTH_SHORT).show();
         }
-        return result;
     }
     @Override
     public void onBackPressed() {

@@ -2,21 +2,18 @@ package com.cu.tt;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -56,7 +53,7 @@ public class RollCallActivity extends AppCompatActivity {
             }
         });
         spinner=findViewById(R.id.spinner);
-        arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,month);
+        arrayAdapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,month);
         spinner.setAdapter(arrayAdapter);
         recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -138,7 +135,7 @@ public class RollCallActivity extends AppCompatActivity {
             dataBaseHelper.close();
 
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -157,10 +154,10 @@ public class RollCallActivity extends AppCompatActivity {
 
             LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
             View view=layoutInflater.inflate(R.layout.rollcall_layout,parent,false);
-            ViewHolder viewHolder=new ViewHolder(view);
-            return viewHolder;
+            return new ViewHolder(view);
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.subject.setText(calculateRollCalls.get(position).getSubject());
@@ -169,9 +166,6 @@ public class RollCallActivity extends AppCompatActivity {
             }
             double total=0;
             double count=0;
-            if(count>0){
-                count=0;
-            }
             DataBaseHelper myDb=new DataBaseHelper(getApplicationContext());
             try {
                 Cursor resc = myDb.getVote();
@@ -190,15 +184,14 @@ public class RollCallActivity extends AppCompatActivity {
                         }
                     }
                 }
-                double ans=0;
+                double ans;
                 if(count>0 && total>0) {
                     ans=(count/(total*4)*100.0);
-                   // Toast.makeText(getApplicationContext(),ans+"",Toast.LENGTH_SHORT).show();
                 }else {
                     ans=0;
                 }
                 String s=ans+"";
-                String fs=null;
+                String fs;
                 if(s.length()>4){
                     fs=s.charAt(0)+""+s.charAt(1)+""+s.charAt(2)+""+s.charAt(3);
                 }else {
@@ -207,7 +200,7 @@ public class RollCallActivity extends AppCompatActivity {
                 holder.percent.setText(fs+"%");
                 holder.progressBar.setProgress((int) ans);
             }catch (Exception e){
-                Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
 

@@ -1,23 +1,17 @@
 package com.cu.tt;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -31,6 +25,7 @@ public class UpdateActivity extends AppCompatActivity {
     public TextView day;
     public LinearLayout update;
     public ImageView back;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,16 +58,14 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=getIntent();
                 id=intent.getStringExtra("Id");
-                Boolean result=myDb.updateData(id,startview.getText().toString(),endview.getText().toString(),
-                        subject.getText().toString(),type.getText().toString(),room.getText().toString(),
-                        teacher.getText().toString(),contact.getText().toString(),note.getText().toString());
-                if(result==true){
-                    //Snackbar snackbar=Snackbar.make(findViewById(R.id.idlayout)," Update Successful",Snackbar.LENGTH_SHORT);
-                    //snackbar.show();
+                boolean result=myDb.updateData(id+"",startview.getText()+"",endview.getText()+"",
+                        subject.getText()+"",type.getText()+"",room.getText()+"",
+                        teacher.getText()+"",contact.getText()+"",note.getText()+"");
+                if(result){
                     Toast.makeText(getApplicationContext(),"Update successful",Toast.LENGTH_SHORT).show();
-                    Intent intent1=new Intent(getApplicationContext(),MainActivity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent1);
+                    Intent main=new Intent(getApplicationContext(),MainActivity.class);
+                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(main);
                     finish();
                 }else {
                     Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();
@@ -125,6 +118,7 @@ public class UpdateActivity extends AppCompatActivity {
         int hr=c.get(Calendar.HOUR_OF_DAY);
         int min=c.get(Calendar.MINUTE);
         TimePickerDialog timePickerDialog=new TimePickerDialog(this, AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 time.setText(i+":"+i1);

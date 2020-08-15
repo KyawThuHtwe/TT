@@ -3,9 +3,6 @@ package com.cu.tt;
 public class MyVoteData {
     private String id,date,subject,vote,day,ssid;
 
-    public MyVoteData() {
-    }
-
     public MyVoteData(String id, String date, String subject, String vote, String day, String ssid) {
         this.id = id;
         this.date = date;

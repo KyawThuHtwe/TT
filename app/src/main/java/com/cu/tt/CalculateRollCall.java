@@ -9,9 +9,6 @@ public class CalculateRollCall {
         this.subject = subject;
     }
 
-    public CalculateRollCall() {
-    }
-
     public int getTotal() {
         return total;
     }

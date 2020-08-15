@@ -1,50 +1,42 @@
 package com.cu.tt;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.cu.tt.Alarm.AlarmReceiver;
 
-import java.sql.Time;
 import java.util.Calendar;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AlarmActivity extends AppCompatActivity {
 
     Button close;
     TextView time;
     TextView subject;
-    TextView day;
 
     @Override
     protected void onStart() {
         super.onStart();
         dat();
     }
+    @SuppressLint("SetTextI18n")
     public void dat(){
-        DatePicker datePicker=new DatePicker(this);
-       // day.setText("Date."+datePicker.getDayOfMonth()+"/"+datePicker.getMonth()+"/"+datePicker.getYear()+"");
         TimePicker timePicker=new TimePicker(this);
         int hr= timePicker.getCurrentHour();
         int min=timePicker.getCurrentMinute();
-        String des=null;
+        String des;
         String s=min+"";
         if(s.length()==1){
             s="0"+s;
@@ -92,7 +84,7 @@ public class AlarmActivity extends AppCompatActivity {
             Cursor res = myDb.getAllData();
             if (res != null && res.getCount() > 0) {
                 while (res.moveToNext()) {
-                    int day = 0;
+                    int day;
                     try {
                         Calendar calendar=Calendar.getInstance();
                         day=calendar.get(Calendar.DAY_OF_WEEK);
@@ -135,7 +127,7 @@ public class AlarmActivity extends AppCompatActivity {
             myDb.close();
 
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -151,7 +143,7 @@ public class AlarmActivity extends AppCompatActivity {
             }
 
         }catch (NumberFormatException nfe){
-            Toast.makeText(getApplicationContext(),nfe.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), nfe.getMessage(),Toast.LENGTH_SHORT).show();
 
         }
     }

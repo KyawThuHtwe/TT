@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <androidx.cardview.widget.CardView
@@ -14,11 +15,12 @@
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:paddingLeft="10dp"
@@ -26,26 +28,31 @@
                     android:layout_weight="1"
                     android:id="@+id/subject"
                     android:textSize="18sp"
-                    android:text="Subject"
+                    android:text="@string/subject"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    tools:ignore="NestedWeights,RtlSymmetry" />
                 <TextView
                     android:paddingLeft="10dp"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
                     android:textSize="18sp"
-                    android:text="Attendance"
+                    android:text="@string/attendance"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:padding="5dp"
                     android:id="@+id/percent"
                     android:layout_centerInParent="true"
                     android:layout_centerVertical="true"
-                    android:text="Percent"
+                    android:text="@string/percent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <ProgressBar

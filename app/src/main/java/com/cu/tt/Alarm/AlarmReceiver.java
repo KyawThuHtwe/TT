@@ -1,5 +1,6 @@
 package com.cu.tt.Alarm;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,20 +8,14 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-
-import com.cu.tt.AlarmActivity;
-import com.cu.tt.MainActivity;
 import androidx.legacy.content.WakefulBroadcastReceiver;
-
-import static android.content.Intent.getIntent;
 
 public class AlarmReceiver extends WakefulBroadcastReceiver {
 
+    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
         //this will update the UI with message
-        MainActivity inst = MainActivity.instance();
-        //inst.setAlarmText("Alarm! Time up! Time up!");
 
         //this will sound the alarm tone
         //this will sound the alarm once, if you wish to

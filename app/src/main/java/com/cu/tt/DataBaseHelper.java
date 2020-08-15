@@ -10,8 +10,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     static final String DATABASE_NAME="TimeDb.db";
     static final String TABLE_NAME="Time_table";
     public static final String COL_1="ID";
-    public static final String COL_2="FROMTIME";
-    public static final String COL_3="TOTIME";
+    public static final String COL_2="FROM_TIME";
+    public static final String COL_3="TO_TIME";
     public static final String COL_4="SUBJECT";
     public static final String COL_5="TYPE";
     public static final String COL_6="ROOM";
@@ -26,10 +26,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE "+TABLE_NAME+" (ID INTEGER PRIMARY KEY AUTOINCREMENT,FROMTIME TEXT,TOTIME TEXT,SUBJECT TEXT,TYPE TEXT,ROOM TEXT,TEACHER TEXT,CONTACT TEXT,NOTE TEXT,DAY TEXT)");
+        db.execSQL("CREATE TABLE "+TABLE_NAME+" (ID INTEGER PRIMARY KEY AUTOINCREMENT,FROM_TIME TEXT,TO_TIME TEXT,SUBJECT TEXT,TYPE TEXT,ROOM TEXT,TEACHER TEXT,CONTACT TEXT,NOTE TEXT,DAY TEXT)");
 
         //
-        db.execSQL("CREATE TABLE ROLLCALL (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE TEXT,SUBJECT TEXT,VOTE TEXT,DAY TEXT,SSID TEXT)");
+        db.execSQL("CREATE TABLE ROLL_CALL (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE TEXT,SUBJECT TEXT,VOTE TEXT,DAY TEXT,S_SID TEXT)");
     }
 
     @Override
@@ -37,18 +37,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         //
-        db.execSQL("DROP TABLE IF EXISTS ROLLCALL");
+        db.execSQL("DROP TABLE IF EXISTS ROLL_CALL");
 
     }
-    public boolean insertRollcall(String date,String Subject,String vote,String day,String sid){
+    public boolean insertRollCall(String date,String Subject,String vote,String day,String sid){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         contentValues.put("DATE",date);
         contentValues.put("SUBJECT",Subject);
         contentValues.put("VOTE",vote);
         contentValues.put("DAY",day);
-        contentValues.put("SSID",sid);
-        long result=db.insert("ROLLCALL",null,contentValues);
+        contentValues.put("S_SID",sid);
+        long result=db.insert("ROLL_CALL",null,contentValues);
         db.close();
 
         if(result==-1){
@@ -60,14 +60,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public Cursor getVote(){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor res=db.rawQuery("Select * from ROLLCALL",null);
+        Cursor res=db.rawQuery("Select * from ROLL_CALL",null);
         return res;
     }
     public boolean updateVote(String id){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         contentValues.put("VOTE","0");
-        int result=db.update("ROLLCALL",contentValues,"ID=?",new String[]{id});
+        int result=db.update("ROLL_CALL",contentValues,"ID=?",new String[]{id});
         if(result>0){
             return true;
         }else {
@@ -76,12 +76,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
     public int deleteVote(String id){
         SQLiteDatabase db=this.getWritableDatabase();
-        int res=db.delete("ROLLCALL","ID=?",new String[]{id});
+        int res=db.delete("ROLL_CALL","ID=?",new String[]{id});
         return res;
     }
     public boolean deleteRollCallTable(){
         SQLiteDatabase db=this.getReadableDatabase();
-        int affectedRows=db.delete("ROLLCALL",null,null);
+        int affectedRows=db.delete("ROLL_CALL",null,null);
         return affectedRows>0;
     }
     public boolean deleteTimeTable(){
@@ -90,11 +90,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return affectedRows>0;
     }
 
-    public boolean insertData(String fromtime,String totime,String subject,String type,String room,String teacher,String contact,String note,String day){
+    public boolean insertData(String from_time,String to_time,String subject,String type,String room,String teacher,String contact,String note,String day){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
-        contentValues.put(COL_2,fromtime);
-        contentValues.put(COL_3,totime);
+        contentValues.put(COL_2,from_time);
+        contentValues.put(COL_3,to_time);
         contentValues.put(COL_4,subject);
         contentValues.put(COL_5,type);
         contentValues.put(COL_6,room);
@@ -123,11 +123,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int res=db.delete(TABLE_NAME,"ID=?",new String[]{id});
         return res;
     }
-    public boolean updateData(String id,String fromtime,String totime,String subject,String type,String room,String teacher,String contact,String note){
+    public boolean updateData(String id,String from_time,String to_time,String subject,String type,String room,String teacher,String contact,String note){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
-        contentValues.put(COL_2,fromtime);
-        contentValues.put(COL_3,totime);
+        contentValues.put(COL_2,from_time);
+        contentValues.put(COL_3,to_time);
         contentValues.put(COL_4,subject);
         contentValues.put(COL_5,type);
         contentValues.put(COL_6,room);

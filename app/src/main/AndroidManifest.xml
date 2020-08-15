@@ -25,7 +25,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_add"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".FriActvity" />
+        <activity android:name=".FriActivity" />
         <activity android:name=".ThuActivity" />
         <activity android:name=".WedActivity" />
         <activity android:name=".TueActivity" />

@@ -2,6 +2,7 @@ package com.cu.tt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -74,7 +75,7 @@ public class SetAlarmActivity extends AppCompatActivity {
                         SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor=sp.edit();
                         editor.putBoolean("Toggle",true);
-                        editor.commit();
+                        editor.apply();
                    }catch (Exception e){
                        Toast.makeText(getApplicationContext(),e.getMessage()+clock.getText(),Toast.LENGTH_SHORT).show();
                    }
@@ -88,13 +89,14 @@ public class SetAlarmActivity extends AppCompatActivity {
     }
     public void insertTime(){
         TimePickerDialog timePickerDialog=new TimePickerDialog(this, AlertDialog.THEME_HOLO_DARK, new TimePickerDialog.OnTimeSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 clock.setText(i+":"+i1);
                 SharedPreferences sp=getSharedPreferences("data",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sp.edit();
                 editor.putString("Time",clock.getText().toString());
-                editor.commit();
+                editor.apply();
             }
         },0,0,true);
         timePickerDialog.setTitle("Select Time");

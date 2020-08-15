@@ -1,21 +1,14 @@
 package com.cu.tt;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,30 +38,32 @@ public class InfoActivity extends AppCompatActivity {
         contact=findViewById(R.id.infocontact);
         note=findViewById(R.id.infonote);
         day=findViewById(R.id.day);
-        String daytext=intent.getStringExtra("Day");
-        String starttext=intent.getStringExtra("Start");
-        String endtext=intent.getStringExtra("End");
-        String subjecttext=intent.getStringExtra("Subject");
-        String typetext=intent.getStringExtra("Type");
-        String roomtext=intent.getStringExtra("Room");
-        String teachertext=intent.getStringExtra("Teacher");
-        final String contacttext=intent.getStringExtra("Contact");
-        String notetext=intent.getStringExtra("Note");
-        day.setText(daytext);
-        start.setText(time(starttext));
-        end.setText(time(endtext));
-        subject.setText(subjecttext);
-        type.setText(typetext);
-        room.setText(roomtext);
-        teacher.setText(teachertext);
-        contact.setText(contacttext);
-        note.setText(notetext);
+        String day_text=intent.getStringExtra("Day");
+        String start_text=intent.getStringExtra("Start");
+        String end_text=intent.getStringExtra("End");
+        String subject_text=intent.getStringExtra("Subject");
+        String type_text=intent.getStringExtra("Type");
+        String room_text=intent.getStringExtra("Room");
+        String teacher_text=intent.getStringExtra("Teacher");
+        final String contact_text=intent.getStringExtra("Contact");
+        String note_text=intent.getStringExtra("Note");
+        day.setText(day_text);
+        assert start_text != null;
+        start.setText(time(start_text));
+        assert end_text != null;
+        end.setText(time(end_text));
+        subject.setText(subject_text);
+        type.setText(type_text);
+        room.setText(room_text);
+        teacher.setText(teacher_text);
+        contact.setText(contact_text);
+        note.setText(note_text);
         ImageButton call=findViewById(R.id.call);
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent1=new Intent(Intent.ACTION_CALL);
-                intent1.setData(Uri.parse("tel:"+contacttext));
+                intent1.setData(Uri.parse("tel:"+contact_text));
                 if(ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(getApplicationContext(),"Please grant the permission to call",Toast.LENGTH_SHORT).show();
                     requestPermission();
@@ -84,12 +79,11 @@ public class InfoActivity extends AppCompatActivity {
     }
 
     public String time(String time){
-        int hr = 0,min=0;
-        String s=null,des=null;
+        int hr = 0,min;
+        String s=null,des;
         try {
             hr=Integer.parseInt(time.split(":")[0]);
             min=Integer.parseInt(time.split(":")[1].replaceAll("\\D+","").replaceAll("^0+",""));
-            des=null;
             s=min+"";
             if(s.length()==1){
                 s="0"+s;
@@ -101,17 +95,15 @@ public class InfoActivity extends AppCompatActivity {
                 des=" AM";
             }
         }catch (NumberFormatException nfe){
-            Toast.makeText(getApplicationContext(),nfe.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), nfe.getMessage(),Toast.LENGTH_SHORT).show();
             if(s==null){
                 s="00";
             }
-            if (des==null){
-                if(hr>12){
-                    hr-=12;
-                    des=" PM";
-                }else {
-                    des=" AM";
-                }
+            if(hr>12){
+                hr-=12;
+                des=" PM";
+            }else {
+                des=" AM";
             }
         }
         return hr+":"+s+des;

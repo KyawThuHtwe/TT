@@ -4,20 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
-
-import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class MonActivity extends AppCompatActivity {
@@ -73,7 +66,7 @@ public class MonActivity extends AppCompatActivity {
     }
 
     public void dataLoad(){
-        ArrayList<MyListData> myListData = new ArrayList<>();
+        myListData = new ArrayList<>();
         try {
             Cursor res = myDb.getAllData();
             if (res != null && res.getCount() > 0) {
@@ -91,7 +84,7 @@ public class MonActivity extends AppCompatActivity {
             myDb.close();
 
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 

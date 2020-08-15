@@ -3,4 +3,7 @@
     <string name="title_activity_add">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="percent">Percent</string>
+    <string name="attendance">Attendance</string>
+    <string name="subject">Subject</string>
 </resources>

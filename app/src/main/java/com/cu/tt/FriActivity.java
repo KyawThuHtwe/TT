@@ -4,12 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -17,7 +15,7 @@ import java.util.ArrayList;
 
 import static android.view.View.VISIBLE;
 
-public class FriActvity extends AppCompatActivity {
+public class FriActivity extends AppCompatActivity {
 
     DataBaseHelper myDb;
     RecyclerView recyclerView;
@@ -68,7 +66,7 @@ public class FriActvity extends AppCompatActivity {
     }
 
     public void dataLoad(){
-        ArrayList<MyListData> myListData = new ArrayList<>();
+        myListData = new ArrayList<>();
         try {
             Cursor res = myDb.getAllData();
             if (res != null && res.getCount() > 0) {

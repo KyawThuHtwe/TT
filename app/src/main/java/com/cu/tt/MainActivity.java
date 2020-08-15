@@ -2,12 +2,10 @@ package com.cu.tt;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.LocalActivityManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,11 +13,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -34,25 +30,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static MainActivity inst;
     private TextView date,time;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
-    private LinearLayout rollcallbtn;
-    public Spinner spinner;
-    String[] weeks={"1st week","2nd week","3rd week","4th week"};
-    ArrayAdapter<String> arrayAdapter;
+    private LinearLayout roll_call_btn;
     public TextView text;
     ImageView setting;
-
-    public static MainActivity instance(){
-        return inst;
-    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        inst=this;
         SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);
         boolean res=sp.getBoolean("Toggle",false);
         if(res){
@@ -75,16 +62,11 @@ public class MainActivity extends AppCompatActivity {
         setBootReceiverEnabled(PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
         finish();
     }
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*spinner=findViewById(R.id.spinner);
-        arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,weeks);
-        spinner.setAdapter(arrayAdapter);
-        spinner.setEnabled(false);
-         */
-
         setting=findViewById(R.id.setting);
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         text=findViewById(R.id.text);
-        rollcallbtn=findViewById(R.id.rollcallbtn);
-        rollcallbtn.setOnClickListener(new View.OnClickListener() {
+        roll_call_btn=findViewById(R.id.rollcallbtn);
+        roll_call_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,RollCallActivity.class));
@@ -131,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
             spec=tabHost.newTabSpec("Fri");
             spec.setIndicator("Fri");
-            spec.setContent(new Intent(getApplicationContext(), FriActvity.class));
+            spec.setContent(new Intent(getApplicationContext(), FriActivity.class));
             tabHost.addTab(spec);
 
             ////
@@ -221,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
 
         ////
@@ -241,11 +223,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
 
     }
 
+    @SuppressLint("SetTextI18n")
     public void dat(){
         Calendar calendar=Calendar.getInstance();
         String curdate= DateFormat.getDateInstance().format(calendar.getTime());
@@ -253,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         TimePicker timePicker=new TimePicker(this);
         int hr= timePicker.getCurrentHour();
         int min=timePicker.getCurrentMinute();
-        String des=null;
+        String des;
         String s=min+"";
         if(s.length()==1){
             s="0"+s;
@@ -367,6 +350,7 @@ public class MainActivity extends AppCompatActivity {
         c.set(Calendar.HOUR_OF_DAY,timePicker.getCurrentHour());
         c.set(Calendar.MINUTE,timePicker.getCurrentMinute());
         String timetext=sp.getString("Time","0:1");
+        assert timetext != null;
         int hr= Integer.parseInt(timetext.split(":")[0]);
         int min= Integer.parseInt(timetext.split(":")[1]);
         int ans=(hr*60*60*1000)+(min*60*1000);

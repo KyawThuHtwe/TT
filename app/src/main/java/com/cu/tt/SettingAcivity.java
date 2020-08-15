@@ -1,30 +1,17 @@
 package com.cu.tt;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import android.Manifest;
 import android.app.AlertDialog;
-import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.cu.tt.Alarm.AlarmReceiver;
-
-import java.util.Calendar;
-
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 
 public class SettingAcivity extends AppCompatActivity {
 
@@ -60,17 +47,16 @@ public class SettingAcivity extends AppCompatActivity {
                 finish();
             }
         });
-        final DataBaseHelper dataBaseHelper=new DataBaseHelper(this);
         rollcall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confrim("RollCall");
+                confirmDelete("RollCall");
             }
         });
         timetable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confrim("TimeTable");
+                confirmDelete("TimeTable");
             }
         });
     }
@@ -87,7 +73,7 @@ public class SettingAcivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
-    public void deleteRollCallTable(){
+    public void deleteAttendanceTable(){
         DataBaseHelper dataBaseHelper=new DataBaseHelper(this);
         try{
             boolean result=dataBaseHelper.deleteRollCallTable();
@@ -100,7 +86,7 @@ public class SettingAcivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
-    public void confrim(final String table){
+    public void confirmDelete(final String table){
         try {
             AlertDialog.Builder builder=new AlertDialog.Builder(this);
             builder.setCancelable(false);
@@ -112,10 +98,10 @@ public class SettingAcivity extends AppCompatActivity {
                     switch (table){
                         case "TimeTable":
                             deleteTimeTable();
-                            deleteRollCallTable();
+                            deleteAttendanceTable();
                             break;
                         case "RollCall":
-                            deleteRollCallTable();
+                            deleteAttendanceTable();
                             break;
                     }
                 }

@@ -68,7 +68,7 @@ public class WedActivity extends AppCompatActivity {
         finish();
     }
     public void dataLoad(){
-        ArrayList<MyListData> myListData = new ArrayList<>();
+        myListData = new ArrayList<>();
         try {
             Cursor res = myDb.getAllData();
             if (res != null && res.getCount() > 0) {
@@ -86,7 +86,7 @@ public class WedActivity extends AppCompatActivity {
             myDb.close();
 
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_SHORT).show();
         }
 
     }
