@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -107,9 +108,10 @@ public class AddActivity extends AppCompatActivity {
     public boolean insertDatabase(String from, String to,String subject,String type,String room,String teacher,String contact,String note,String day){
         boolean result=myDb.insertData(from,to,subject,type,room,teacher,contact,note,day);
         if(result==true){
-            Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Insert successful",Toast.LENGTH_SHORT).show();
             Intent intent1=new Intent(getApplicationContext(),MainActivity.class);
             intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent1.putExtra("PutDay",title);
             startActivity(intent1);
             finish();
         }else {

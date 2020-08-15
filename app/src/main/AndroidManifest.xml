@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cu.tt">
 
     <application
@@ -9,7 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AlarmActivity"></activity>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".SetAlarmActivity" />
+        <activity android:name=".SettingAcivity" />
+        <activity android:name=".RollCallActivity" />
+        <activity android:name=".AlarmActivity" />
         <activity android:name=".UpdateActivity" />
         <activity
             android:name=".InfoActivity"
@@ -24,7 +30,7 @@
         <activity android:name=".WedActivity" />
         <activity android:name=".TueActivity" />
         <activity android:name=".MonActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,14 +38,23 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Alarm.AlarmReceiver" />
+        <receiver
+            android:name=".Alarm.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".Alarm.AlarmService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
     </application>
+    <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -1,69 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/idlayout">
 
     <androidx.cardview.widget.CardView
         style="@style/ThemeOverlay.AppCompat"
         android:id="@+id/showinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="2dp">
         <LinearLayout
+            android:id="@+id/showhide"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:paddingRight="5dp"
+            <RelativeLayout
+                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/rollcall"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:textColor="@color/colorPrimaryDark"
-                        android:id="@+id/rsubject"
-                        android:padding="5dp"
-                        android:layout_weight="2"
-                        android:textSize="20sp"
-                        android:text="Subject"
+                        android:visibility="gone"
+                        android:id="@+id/pid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/absent"
+                        android:src="@drawable/ic_baseline_favorite_border_24"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone"
+                        android:id="@+id/present"
+                        android:src="@drawable/ic_baseline_favorite_24"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+
                 </LinearLayout>
+
                 <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/bgt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:background="@color/start"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
                         android:textColor="@android:color/white"
                         android:gravity="center_vertical|center"
                         android:id="@+id/rstart"
-                        android:padding="5dp"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:text="00:00"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"/>
                     <TextView
                         android:background="@color/end"
                         android:textColor="@android:color/white"
                         android:gravity="center"
                         android:id="@+id/rend"
-                        android:padding="5dp"
-                        android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"                        android:layout_weight="1"
+                        android:textSize="18sp"
                         android:text="00:00"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
-            </LinearLayout>
-
+            </RelativeLayout>
             <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/rsubject"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:text="Subject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/alldetail"
                 android:background="@color/detail"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"

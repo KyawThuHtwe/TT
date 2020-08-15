@@ -9,31 +9,90 @@
     tools:context=".MainActivity">
 
     <androidx.cardview.widget.CardView
-        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-            <TextView
-                android:textColor="@color/colorPrimaryDark"
-                android:paddingLeft="5dp"
-                android:layout_centerVertical="true"
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30sp"/>
-            <TextView
-                android:textColor="@color/colorPrimaryDark"
-                android:paddingLeft="8dp"
-                android:layout_below="@+id/time"
-                android:layout_centerVertical="true"
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"/>
 
-        </RelativeLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+          <RelativeLayout
+                   android:paddingBottom="10dp"
+                   android:paddingTop="10dp"
+                   android:gravity="center_vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:text="Time"
+                       android:textColor="@color/colorPrimaryDark"
+                       android:paddingLeft="5dp"
+                       android:id="@+id/time"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textSize="30sp"/>
+                   <TextView
+                       android:text="date"
+                       android:textColor="@color/colorPrimaryDark"
+                       android:paddingLeft="8dp"
+                       android:layout_below="@+id/time"
+                       android:id="@+id/date"
+                       android:layout_width="200dp"
+                       android:layout_height="wrap_content"
+                       android:textSize="10sp"/>
+               </RelativeLayout>
+            <RelativeLayout
+                android:background="@color/black_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/setting"
+                    android:padding="5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_baseline_settings_24"/>
+
+                <TextView
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:text="Week"
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/view"/>
+                <View
+                    android:padding="5dp"
+                    android:id="@+id/view"
+                    android:background="@android:color/darker_gray"
+                    android:layout_toLeftOf="@+id/rollcallbtn"
+                    android:layout_centerVertical="true"
+                    android:layout_width="2dp"
+                    android:layout_height="25dp"/>
+                <LinearLayout
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/rollcallbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_baseline_data_usage_24"/>
+                    <TextView
+                        android:paddingRight="5dp"
+                        android:textSize="18sp"
+                        android:layout_gravity="center|left"
+                        android:text="Monthly Report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
    <TabHost

@@ -31,10 +31,12 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
         Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
         ringtone.play();
-        if(ringtone.isPlaying()){
+       /* if(ringtone.isPlaying()){
             Intent intent1=new Intent(MainActivity.instance().getApplicationContext(), AlarmActivity.class);
             MainActivity.instance().startActivity(intent1);
         }
+
+        */
 
         //this will send a notification message
         ComponentName comp = new ComponentName(context.getPackageName(),

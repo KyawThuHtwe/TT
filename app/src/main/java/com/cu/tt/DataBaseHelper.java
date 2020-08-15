@@ -27,13 +27,69 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE "+TABLE_NAME+" (ID INTEGER PRIMARY KEY AUTOINCREMENT,FROMTIME TEXT,TOTIME TEXT,SUBJECT TEXT,TYPE TEXT,ROOM TEXT,TEACHER TEXT,CONTACT TEXT,NOTE TEXT,DAY TEXT)");
+
+        //
+        db.execSQL("CREATE TABLE ROLLCALL (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE TEXT,SUBJECT TEXT,VOTE TEXT,DAY TEXT,SSID TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        //
+        db.execSQL("DROP TABLE IF EXISTS ROLLCALL");
+
     }
+    public boolean insertRollcall(String date,String Subject,String vote,String day,String sid){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("DATE",date);
+        contentValues.put("SUBJECT",Subject);
+        contentValues.put("VOTE",vote);
+        contentValues.put("DAY",day);
+        contentValues.put("SSID",sid);
+        long result=db.insert("ROLLCALL",null,contentValues);
+        db.close();
+
+        if(result==-1){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public Cursor getVote(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor res=db.rawQuery("Select * from ROLLCALL",null);
+        return res;
+    }
+    public boolean updateVote(String id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("VOTE","0");
+        int result=db.update("ROLLCALL",contentValues,"ID=?",new String[]{id});
+        if(result>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    public int deleteVote(String id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        int res=db.delete("ROLLCALL","ID=?",new String[]{id});
+        return res;
+    }
+    public boolean deleteRollCallTable(){
+        SQLiteDatabase db=this.getReadableDatabase();
+        int affectedRows=db.delete("ROLLCALL",null,null);
+        return affectedRows>0;
+    }
+    public boolean deleteTimeTable(){
+        SQLiteDatabase db=this.getReadableDatabase();
+        int affectedRows=db.delete("Time_table",null,null);
+        return affectedRows>0;
+    }
+
     public boolean insertData(String fromtime,String totime,String subject,String type,String room,String teacher,String contact,String note,String day){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -85,4 +141,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+    public boolean updateS(String id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(COL_4,"Subject");
+        int result=db.update(TABLE_NAME,contentValues,"ID=?",new String[]{id});
+        if(result>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    public Cursor selectTotalCount(){
+        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+        Cursor count=sqLiteDatabase.rawQuery("Select SUBJECT,Count(*) count from "+TABLE_NAME+" Group By SUBJECT Having count>0",null);
+        return count;
+    }
+
 }

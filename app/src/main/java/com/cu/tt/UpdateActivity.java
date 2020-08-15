@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -66,7 +67,9 @@ public class UpdateActivity extends AppCompatActivity {
                         subject.getText().toString(),type.getText().toString(),room.getText().toString(),
                         teacher.getText().toString(),contact.getText().toString(),note.getText().toString());
                 if(result==true){
-                    Toast.makeText(getApplicationContext(),"Successful",Toast.LENGTH_SHORT).show();
+                    //Snackbar snackbar=Snackbar.make(findViewById(R.id.idlayout)," Update Successful",Snackbar.LENGTH_SHORT);
+                    //snackbar.show();
+                    Toast.makeText(getApplicationContext(),"Update successful",Toast.LENGTH_SHORT).show();
                     Intent intent1=new Intent(getApplicationContext(),MainActivity.class);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent1);
@@ -90,6 +93,7 @@ public class UpdateActivity extends AppCompatActivity {
         startview.setText(starttext);
         endview.setText(endtext);
         subject.setText(subjecttext);
+        subject.setEnabled(false);
         type.setText(typetext);
         room.setText(roomtext);
         teacher.setText(teachertext);

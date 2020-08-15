@@ -1,5 +1,6 @@
 package com.cu.tt;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -15,12 +17,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class MonActivity extends AppCompatActivity {
 
     DataBaseHelper myDb;
     RecyclerView recyclerView;
     ArrayList<MyListData> myListData;
     FloatingActionButton floatingActionButton;
+    ArrayList<MyVoteData> myVoteData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,17 @@ public class MonActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         dataLoad();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy>0 && floatingActionButton.getVisibility()== VISIBLE){
+                    floatingActionButton.hide();
+                }else if(dy<0 && floatingActionButton.getVisibility()!= VISIBLE){
+                    floatingActionButton.show();
+                }
+            }
+        });
 
     }
 
@@ -52,7 +69,7 @@ public class MonActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        //finish();
     }
 
     public void dataLoad(){
@@ -61,17 +78,40 @@ public class MonActivity extends AppCompatActivity {
             Cursor res = myDb.getAllData();
             if (res != null && res.getCount() > 0) {
                 while (res.moveToNext()) {
-                    if(res.getString(9).equals("Monday")){
-                    myListData.add(new MyListData(res.getString(0),res.getString(1),res.getString(2),res.getString(3),
-                            res.getString(4),res.getString(5),res.getString(6),res.getString(7),res.getString(8),res.getString(9)));
+                    if(res.getString(9).equals("Monday")) {
+                        if (!res.getString(3).equals("Subject")) {
+                            myListData.add(new MyListData(res.getString(0), res.getString(1), res.getString(2), res.getString(3),
+                                    res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8), res.getString(9)));
+                        }
                     }
                 }
             }
-            recyclerView.setAdapter(new MyAdapter(myListData,getApplicationContext()));
+            Vote();
+            recyclerView.setAdapter(new MyAdapter(myListData,myVoteData,getApplicationContext()));
             myDb.close();
 
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void Vote(){
+        DataBaseHelper myDb=new DataBaseHelper(this);
+        myVoteData=new ArrayList<>();
+        try {
+            Cursor res = myDb.getVote();
+            if (res != null && res.getCount() > 0) {
+                while (res.moveToNext()) {
+                    if(res.getString(4).equals("Monday")) {
+                        myVoteData.add(new MyVoteData(res.getString(0),res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5)));
+                    }
+                }
+            }
+            myDb.close();
+
+        }catch (NullPointerException e){
+            //Toast.makeText(this,e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 

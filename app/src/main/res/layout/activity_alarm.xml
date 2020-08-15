@@ -9,33 +9,45 @@
     android:layout_gravity="center|center_horizontal"
     android:orientation="vertical">
 
-    <TextView
-        android:background="@drawable/bgrd"
-        android:textStyle="bold"
-        android:id="@+id/text"
-        android:layout_marginTop="100dp"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:text="Clock"
-        android:layout_width="220dp"
-        android:layout_height="220dp"/>
-
-    <TimePicker
-        android:visibility="gone"
-        android:foregroundGravity="center"
-        android:id="@+id/time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
     <LinearLayout
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        android:background="@android:color/white"
+        android:layout_gravity="center_vertical|center"
+        android:gravity="center_vertical"
         android:orientation="vertical"
-        android:layout_marginTop="120dp"
-        android:gravity="center_horizontal|center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="@drawable/bgrdrd"
+            android:textColor="@android:color/background_dark"
+            android:id="@+id/ctime"
+            android:textSize="40sp"
+            android:layout_gravity="center"
+            android:text="Clock"
+            android:layout_width="250dp"
+            android:layout_height="250dp"/>
+
+    </LinearLayout>
+    <TextView
+        android:textColor="@android:color/background_dark"
+        android:layout_gravity="center"
+        android:paddingTop="10dp"
+        android:text="Subject"
+        android:id="@+id/subject"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="bottom|end"
             android:layout_marginRight="5dp"
             android:textColor="@android:color/holo_red_dark"
             android:background="@drawable/bgwhite"

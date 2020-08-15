@@ -55,8 +55,8 @@ public class InfoActivity extends AppCompatActivity {
         final String contacttext=intent.getStringExtra("Contact");
         String notetext=intent.getStringExtra("Note");
         day.setText(daytext);
-        start.setText(starttext);
-        end.setText(endtext);
+        start.setText(time(starttext));
+        end.setText(time(endtext));
         subject.setText(subjecttext);
         type.setText(typetext);
         room.setText(roomtext);
@@ -81,6 +81,40 @@ public class InfoActivity extends AppCompatActivity {
 
     private void requestPermission() {
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CALL_PHONE},1);
+    }
+
+    public String time(String time){
+        int hr = 0,min=0;
+        String s=null,des=null;
+        try {
+            hr=Integer.parseInt(time.split(":")[0]);
+            min=Integer.parseInt(time.split(":")[1].replaceAll("\\D+","").replaceAll("^0+",""));
+            des=null;
+            s=min+"";
+            if(s.length()==1){
+                s="0"+s;
+            }
+            if(hr>12){
+                hr-=12;
+                des=" PM";
+            }else {
+                des=" AM";
+            }
+        }catch (NumberFormatException nfe){
+            Toast.makeText(getApplicationContext(),nfe.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            if(s==null){
+                s="00";
+            }
+            if (des==null){
+                if(hr>12){
+                    hr-=12;
+                    des=" PM";
+                }else {
+                    des=" AM";
+                }
+            }
+        }
+        return hr+":"+s+des;
     }
 
 }

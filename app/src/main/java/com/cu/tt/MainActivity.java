@@ -1,13 +1,25 @@
 package com.cu.tt;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.LocalActivityManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -15,15 +27,23 @@ import android.widget.Toast;
 
 import com.cu.tt.Alarm.AlarmReceiver;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class MainActivity extends AppCompatActivity {
     private static MainActivity inst;
-    TextView date,time;
+    private TextView date,time;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
+    private LinearLayout rollcallbtn;
+    public Spinner spinner;
+    String[] weeks={"1st week","2nd week","3rd week","4th week"};
+    ArrayAdapter<String> arrayAdapter;
+    public TextView text;
+    ImageView setting;
 
     public static MainActivity instance(){
         return inst;
@@ -33,24 +53,57 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         inst=this;
-        sendAlarm();
+        SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);
+        boolean res=sp.getBoolean("Toggle",false);
+        if(res){
+            sendAlarm();
+        }
     }
+    Handler handler=new Handler();
+    Runnable runnable=new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(runnable,6000);
+            dat();
+        }
+    };
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        setBootReceiverEnabled(PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
         finish();
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*spinner=findViewById(R.id.spinner);
+        arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,weeks);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setEnabled(false);
+         */
+
+        setting=findViewById(R.id.setting);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),SettingAcivity.class));
+            }
+        });
+        text=findViewById(R.id.text);
+        rollcallbtn=findViewById(R.id.rollcallbtn);
+        rollcallbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,RollCallActivity.class));
+            }
+        });
         alarmManager= (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         date=findViewById(R.id.date);
         time=findViewById(R.id.time);
         try {
-            dat();
             TabHost tabHost = findViewById(R.id.tabhost);
             LocalActivityManager localActivityManager=new LocalActivityManager(this,false);
             localActivityManager.dispatchCreate(savedInstanceState);
@@ -83,48 +136,120 @@ public class MainActivity extends AppCompatActivity {
 
             ////
             try {
-                Calendar calendar=Calendar.getInstance();
-                int day=calendar.get(Calendar.DAY_OF_WEEK);
-                switch (day){
-                    case 2:
-                        tabHost.setCurrentTab(0);
-                        break;
-                    case 3:
-                        tabHost.setCurrentTab(1);
-                        break;
-                    case 4:
-                        tabHost.setCurrentTab(2);
-                        break;
-                    case 5:
-                        tabHost.setCurrentTab(3);
-                        break;
-                    case 6:
-                        tabHost.setCurrentTab(4);
-                        break;
+                Intent getday=getIntent();
+                String title=getday.getStringExtra("PutDay");
+                if(title!=null) {
+                    switch (title) {
+                        case "Monday":
+                            tabHost.setCurrentTab(0);
+                            break;
+                        case "Tuesday":
+                            tabHost.setCurrentTab(1);
+                            break;
+                        case "Wednesday":
+                            tabHost.setCurrentTab(2);
+                            break;
+                        case "Thursday":
+                            tabHost.setCurrentTab(3);
+                            break;
+                        case "Friday":
+                            tabHost.setCurrentTab(4);
+                            break;
+                    }
+                }else {
+                    Calendar calendar=Calendar.getInstance();
+                    int day=calendar.get(Calendar.DAY_OF_WEEK);
+                    switch (day){
+                        case 2:
+                            tabHost.setCurrentTab(0);
+                            break;
+                        case 3:
+                            tabHost.setCurrentTab(1);
+                            break;
+                        case 4:
+                            tabHost.setCurrentTab(2);
+                            break;
+                        case 5:
+                            tabHost.setCurrentTab(3);
+                            break;
+                        case 6:
+                            tabHost.setCurrentTab(4);
+                            break;
+                    }
                 }
             }catch (Exception e){
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
-            tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-                @Override
-                public void onTabChanged(String s) {
-                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                }
-            });
+
         }catch (Exception e){
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
+        DatePicker datePicker=new DatePicker(this);
+        if(datePicker.getDayOfMonth()<=7){
+            text.setText("1st week");
+        }else if(datePicker.getDayOfMonth()<=14){
+            text.setText("2nd week");
+        }else if(datePicker.getDayOfMonth()<=21){
+            text.setText("3rd week");
+        }else if(datePicker.getDayOfMonth()<=28){
+            text.setText("4th week");
+        }
+        handler.post(runnable);
+        //sendAlarm();
+        SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);
+        boolean res=sp.getBoolean("Toggle",false);
+        if(res){
+            sendAlarm();
+        }
+        ///
+        DataBaseHelper db=new DataBaseHelper(this);
+        try {
+            Cursor resc = db.getVote();
+            if (resc != null && resc.getCount() > 0) {
+                while (resc.moveToNext()) {
+                    if(resc.getString(3).equals("0")){
+                        String id=resc.getString(0);
+                        int i=db.deleteVote(id);
+                        if(i==1){
+                            Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+        }
 
-        sendAlarm();
-
+        ////
+        try {
+            Cursor r = db.getAllData();
+            if (r != null && r.getCount() > 0) {
+                while (r.moveToNext()) {
+                    if(r.getString(3).equals("Subject")){
+                        String id=r.getString(0);
+                        int i=db.deleteData(id);
+                        if(i==1){
+                            Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+        }
 
     }
 
     public void dat(){
-        DatePicker datePicker=new DatePicker(this);
-        date.setText("Date."+datePicker.getDayOfMonth()+"/"+datePicker.getMonth()+"/"+datePicker.getYear()+"");
+        Calendar calendar=Calendar.getInstance();
+        String curdate= DateFormat.getDateInstance().format(calendar.getTime());
+        date.setText(curdate);
         TimePicker timePicker=new TimePicker(this);
         int hr= timePicker.getCurrentHour();
         int min=timePicker.getCurrentMinute();
@@ -141,10 +266,11 @@ public class MainActivity extends AppCompatActivity {
         }
         time.setText(hr+":"+s+des);
     }
-
+/*
     public void setAlarmText(String s) {
         inst.setAlarmText("Alarm! Time up! Time up!");
     }
+
     public void sendAlarm(){
         DataBaseHelper myDb=new DataBaseHelper(this);
         try {
@@ -158,29 +284,29 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),day+"", Toast.LENGTH_SHORT).show();
 
                         switch (day){
-                            case 7:
+                            case 2:
                                 if(res.getString(9).equals("Monday")){
-                                    sendTimeAlarm(res.getString(1),res.getString(3));
+                                    sendTimeAlarm(res.getString(1));
                                 }
                                 break;
                             case 3:
                                 if(res.getString(9).equals("Tuesday")){
-                                    sendTimeAlarm(res.getString(1),res.getString(3));
+                                    sendTimeAlarm(res.getString(1));
                                 }
                                 break;
                             case 4:
                                 if(res.getString(9).equals("Wednesday")){
-                                    sendTimeAlarm(res.getString(1),res.getString(3));
+                                    sendTimeAlarm(res.getString(1));
                                 }
                                 break;
                             case 5:
                                 if(res.getString(9).equals("Thursday")){
-                                    sendTimeAlarm(res.getString(1),res.getString(3));
+                                    sendTimeAlarm(res.getString(1));
                                 }
                                 break;
                             case 6:
                                 if(res.getString(9).equals("Friday")){
-                                    sendTimeAlarm(res.getString(1),res.getString(3));
+                                    sendTimeAlarm(res.getString(1));
                                 }
                                 break;
                         }
@@ -198,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void sendTimeAlarm(String time,String subject){
+    public void sendTimeAlarm(String time){
         try {
             int hr=Integer.parseInt(time.split(":")[0]);
             int min=Integer.parseInt(time.split(":")[1].replaceAll("\\D+","").replaceAll("^0+",""));
@@ -207,8 +333,8 @@ public class MainActivity extends AppCompatActivity {
             int currentMinute=timePicker.getCurrentMinute();
             if(currentHour==hr && currentMinute==min){
                 sendAlarmConfrim(hr,min);
-                Toast.makeText(getApplicationContext(),hr+" "+min+":"+currentHour+" "+currentMinute,Toast.LENGTH_SHORT).show();
             }
+            Toast.makeText(getApplicationContext(),currentHour+"="+hr+"/"+currentMinute+"="+min,Toast.LENGTH_SHORT).show();
 
         }catch (NumberFormatException nfe){
             Toast.makeText(getApplicationContext(),nfe.getMessage().toString(),Toast.LENGTH_SHORT).show();
@@ -218,16 +344,44 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendAlarmConfrim(int hr,int min) {
         try {
-                Calendar calendar = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, hr);
                 calendar.set(Calendar.MINUTE, min);
                 Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
                 pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
-                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-                Toast.makeText(getApplicationContext(),hr+"+"+min+" "+calendar.getTimeInMillis(),Toast.LENGTH_SHORT).show();
-            }catch (NumberFormatException nfe){
+                alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+                setBootReceiverEnabled(PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+                Toast.makeText(getApplicationContext(),System.currentTimeMillis()+":"+calendar.getTime(),Toast.LENGTH_SHORT).show();
+
+        }catch (NumberFormatException nfe){
                 Toast.makeText(getApplicationContext(),nfe.getMessage().toString(),Toast.LENGTH_SHORT).show();
 
             }
     }
+
+ */
+    public void sendAlarm(){
+        SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);
+        TimePicker timePicker=new TimePicker(this);
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY,timePicker.getCurrentHour());
+        c.set(Calendar.MINUTE,timePicker.getCurrentMinute());
+        String timetext=sp.getString("Time","0:1");
+        int hr= Integer.parseInt(timetext.split(":")[0]);
+        int min= Integer.parseInt(timetext.split(":")[1]);
+        int ans=(hr*60*60*1000)+(min*60*1000);
+        Intent intent=new Intent(getApplicationContext(), AlarmReceiver.class);
+        pendingIntent= PendingIntent.getBroadcast(getApplicationContext(),0,intent,0);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),ans,pendingIntent);
+        setBootReceiverEnabled(PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+
+       // Toast.makeText(getApplicationContext(),ans+"",Toast.LENGTH_SHORT).show();
+    }
+
+    public void setBootReceiverEnabled(int componentEnabledState){
+        ComponentName componentName=new ComponentName(this,AlarmReceiver.class);
+        PackageManager packageManager=getPackageManager();
+        packageManager.setComponentEnabledSetting(componentName,componentEnabledState,PackageManager.DONT_KILL_APP);
+    }
+
 }
