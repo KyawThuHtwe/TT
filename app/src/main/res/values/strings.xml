@@ -6,4 +6,5 @@
     <string name="percent">Percent</string>
     <string name="attendance">Attendance</string>
     <string name="subject">Subject</string>
+    <string name="weekly_report">Weekly Report</string>
 </resources>

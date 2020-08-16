@@ -45,7 +45,7 @@
             android:padding="5dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_baseline_access_alarm_24"/>
+            android:src="@drawable/ic_alarm_clock"/>
         <TextView
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/alarmicon"
@@ -71,7 +71,7 @@
                 android:padding="5dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_baseline_delete_forever_24"/>
+                android:src="@drawable/ic_database"/>
             <TextView
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/deleteicon1"
@@ -97,13 +97,13 @@
                 android:padding="5dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_baseline_delete_forever_24"/>
+                android:src="@drawable/ic_database"/>
             <TextView
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/deleteicon2"
                 android:paddingRight="5dp"
                 android:textSize="17sp"
-                android:text="Roll Call Record Database"
+                android:text="Attendance Database"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>

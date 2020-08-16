@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
     private LinearLayout roll_call_btn;
-    public TextView text;
+    public TextView weekly;
     ImageView setting;
 
     @Override
@@ -74,7 +74,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),SettingAcivity.class));
             }
         });
-        text=findViewById(R.id.text);
+        weekly=findViewById(R.id.weekly);
+        weekly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),WeeklyReportActivity.class));
+            }
+        });
         roll_call_btn=findViewById(R.id.rollcallbtn);
         roll_call_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,16 +174,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
-        DatePicker datePicker=new DatePicker(this);
-        if(datePicker.getDayOfMonth()<=7){
-            text.setText("1st week");
-        }else if(datePicker.getDayOfMonth()<=14){
-            text.setText("2nd week");
-        }else if(datePicker.getDayOfMonth()<=21){
-            text.setText("3rd week");
-        }else if(datePicker.getDayOfMonth()<=28){
-            text.setText("4th week");
-        }
+
         handler.post(runnable);
         //sendAlarm();
         SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);

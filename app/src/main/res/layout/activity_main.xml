@@ -54,10 +54,11 @@
                     android:src="@drawable/ic_baseline_settings_24"/>
 
                 <TextView
+                    android:background="@drawable/bg"
                     android:padding="5dp"
                     android:textSize="18sp"
-                    android:text="Week"
-                    android:id="@+id/text"
+                    android:text="Weekly Report"
+                    android:id="@+id/weekly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -68,7 +69,7 @@
                     android:background="@android:color/darker_gray"
                     android:layout_toLeftOf="@+id/rollcallbtn"
                     android:layout_centerVertical="true"
-                    android:layout_width="2dp"
+                    android:layout_width="0dp"
                     android:layout_height="25dp"/>
                 <LinearLayout
                     android:layout_centerVertical="true"
@@ -76,13 +77,11 @@
                     android:id="@+id/rollcallbtn"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
-                    <ImageView
-                        android:padding="5dp"
-                        android:layout_gravity="center"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_baseline_data_usage_24"/>
                     <TextView
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/bg"
                         android:paddingRight="5dp"
                         android:textSize="18sp"
                         android:layout_gravity="center|left"

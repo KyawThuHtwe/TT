@@ -139,24 +139,24 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         try {
             if (myVoteData.get(position).getVote().equals("1") && myVoteData.get(position).getDay().equals(myListData.get(position).getDay())&& myVoteData.get(position).getSsid().equals(myListData.get(position).getId())) {
                 int vdate= Integer.parseInt(myVoteData.get(position).getDate().split("/")[0]);
-                if(day>0) {
-                    if (vdate>0){
+                if(day>0 && day<8) {
+                    if (vdate>0 && vdate<8){
                         holder.absent.setVisibility(GONE);
                         holder.present.setVisibility(VISIBLE);
                     }else {
                         holder.present.setVisibility(GONE);
                         holder.absent.setVisibility(VISIBLE);
                     }
-                }else if(day>7) {
-                    if (vdate>7) {
+                }else if(day>7 && day<15) {
+                    if (vdate>7 && vdate<15) {
                         holder.absent.setVisibility(GONE);
                         holder.present.setVisibility(VISIBLE);
                     } else {
                         holder.present.setVisibility(GONE);
                         holder.absent.setVisibility(VISIBLE);
                     }
-                }else if(day>14) {
-                    if (vdate>14){
+                }else if(day>14 && day<22) {
+                    if (vdate>14 && vdate<22){
                         holder.absent.setVisibility(GONE);
                         holder.present.setVisibility(VISIBLE);
                     }else {

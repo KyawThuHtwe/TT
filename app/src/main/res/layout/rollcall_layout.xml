@@ -18,31 +18,50 @@
             android:orientation="horizontal"
             android:baselineAligned="false">
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:paddingLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:id="@+id/subject"
-                    android:textSize="18sp"
-                    android:text="@string/subject"
+                <LinearLayout
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:background="@drawable/bgrdrd"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp">
+                    <ImageView
+                        android:layout_gravity="center_vertical|center"
+                        android:id="@+id/absent"
+                        android:src="@drawable/ic_books_stack_of_three"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    tools:ignore="NestedWeights,RtlSymmetry" />
-                <TextView
-                    android:paddingLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:text="@string/attendance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    tools:ignore="RtlSymmetry" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:paddingLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:id="@+id/subject"
+                        android:textSize="18sp"
+                        android:text="@string/subject"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        tools:ignore="NestedWeights,RtlSymmetry" />
+                    <TextView
+                        android:paddingLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:text="@string/attendance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="wrap_content"
