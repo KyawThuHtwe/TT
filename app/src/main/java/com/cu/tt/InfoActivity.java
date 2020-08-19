@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,13 +17,13 @@ import android.widget.Toast;
 public class InfoActivity extends AppCompatActivity {
 
     public TextView start,end,subject,type,room,teacher,contact,note,day;
-    LinearLayout close;
+    ImageView close;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
         final Intent intent=getIntent();
-        close=findViewById(R.id.close);
+        close=findViewById(R.id.back);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

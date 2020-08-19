@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NoteActivity">
+
+            <LinearLayout
+                android:background="@color/detail"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:padding="5dp"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:textSize="18sp"
+                        android:text="Notes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:id="@+id/addNote"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center|center_vertical"
+                        android:padding="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_add_24"/>
+
+
+
+                </RelativeLayout>
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/scrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_marginBottom="5dp"
+                            android:visibility="gone"
+                            android:id="@+id/today"
+                            android:gravity="right"
+                            android:padding="10dp"
+                            android:textSize="18sp"
+                            android:text="Today"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/today_recyclerView"/>
+
+                        <TextView
+                            android:layout_marginBottom="5dp"
+                            android:visibility="gone"
+                            android:gravity="right"
+                            android:padding="10dp"
+                            android:id="@+id/tomorrow"
+                            android:textSize="18sp"
+                            android:text="Tomorrow"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tomorrow_recyclerView"/>
+                        <TextView
+                            android:layout_marginBottom="5dp"
+                            android:visibility="gone"
+                            android:gravity="right"
+                            android:padding="10dp"
+                            android:id="@+id/other_day"
+                            android:textSize="18sp"
+                            android:text="Other day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/other_day_recyclerView"/>
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+
+            </LinearLayout>
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="8dp"
+        android:id="@+id/table"
+        android:layout_margin="20dp"
+        android:layout_gravity="bottom|right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="@color/colorPrimaryDark"
+            android:padding="10dp"
+            android:gravity="center_vertical|center"
+            android:layout_gravity="center|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_baseline_folder_open_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textColor="@color/black_overlay"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="Time Table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

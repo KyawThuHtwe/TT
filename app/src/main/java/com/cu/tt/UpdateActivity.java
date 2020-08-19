@@ -65,6 +65,8 @@ public class UpdateActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Update successful",Toast.LENGTH_SHORT).show();
                     Intent main=new Intent(getApplicationContext(),MainActivity.class);
                     main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    main.putExtra("PutDay",day.getText().toString());
+                    main.putExtra("Anim","off");
                     startActivity(main);
                     finish();
                 }else {

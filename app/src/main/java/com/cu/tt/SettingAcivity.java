@@ -15,7 +15,7 @@ import com.cu.tt.Alarm.AlarmReceiver;
 
 public class SettingAcivity extends AppCompatActivity {
 
-    RelativeLayout timetable,rollcall,alarm,about;
+    RelativeLayout timetable,rollcall,alarm,about,note;
     ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,7 @@ public class SettingAcivity extends AppCompatActivity {
         timetable=findViewById(R.id.timetable);
         rollcall=findViewById(R.id.rollcall);
         back=findViewById(R.id.back);
+        note=findViewById(R.id.note);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,11 +60,31 @@ public class SettingAcivity extends AppCompatActivity {
                 confirmDelete("TimeTable");
             }
         });
+        note.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmDelete("Note");
+            }
+        });
+
     }
     public void deleteTimeTable(){
         DataBaseHelper dataBaseHelper=new DataBaseHelper(this);
         try{
             boolean result=dataBaseHelper.deleteTimeTable();
+            if(result){
+                Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void deleteNote(){
+        DataBaseHelper dataBaseHelper=new DataBaseHelper(this);
+        try{
+            boolean result=dataBaseHelper.deleteNoteTable();
             if(result){
                 Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
             }else {
@@ -102,6 +123,9 @@ public class SettingAcivity extends AppCompatActivity {
                             break;
                         case "RollCall":
                             deleteAttendanceTable();
+                            break;
+                        case "Note":
+                            deleteNote();
                             break;
                     }
                 }

@@ -27,9 +27,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE "+TABLE_NAME+" (ID INTEGER PRIMARY KEY AUTOINCREMENT,FROM_TIME TEXT,TO_TIME TEXT,SUBJECT TEXT,TYPE TEXT,ROOM TEXT,TEACHER TEXT,CONTACT TEXT,NOTE TEXT,DAY TEXT)");
-
         //
         db.execSQL("CREATE TABLE ROLL_CALL (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE TEXT,SUBJECT TEXT,VOTE TEXT,DAY TEXT,S_SID TEXT)");
+        //
+        db.execSQL("CREATE TABLE NOTE (ID INTEGER PRIMARY KEY AUTOINCREMENT,TITLE TEXT,SUBJECT TEXT,TIME TEXT,DATE TEXT)");
     }
 
     @Override
@@ -38,8 +39,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         //
         db.execSQL("DROP TABLE IF EXISTS ROLL_CALL");
+        //
+        db.execSQL("DROP TABLE IF EXISTS NOTE");
 
     }
+    public boolean insertNote(String title,String subject,String time,String date){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("TITLE",title);
+        contentValues.put("SUBJECT",subject);
+        contentValues.put("TIME",time);
+        contentValues.put("DATE",date);
+        long result=db.insert("NOTE",null,contentValues);
+        db.close();
+
+        if(result==-1){
+            return false;
+        }else {
+            return true;
+        }
+    }
+    public Cursor getNote(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor res=db.rawQuery("Select * from NOTE",null);
+        return res;
+    }
+    public boolean updateNote(String id,String title,String subject,String time,String date){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("TITLE",title);
+        contentValues.put("SUBJECT",subject);
+        contentValues.put("TIME",time);
+        contentValues.put("DATE",date);
+        int result=db.update("NOTE",contentValues,"ID=?",new String[]{id});
+        if(result>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     public boolean insertRollCall(String date,String Subject,String vote,String day,String sid){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -74,10 +113,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+    public int deleteNote(String id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        int res=db.delete("NOTE","ID=?",new String[]{id});
+        return res;
+    }
     public int deleteVote(String id){
         SQLiteDatabase db=this.getWritableDatabase();
         int res=db.delete("ROLL_CALL","ID=?",new String[]{id});
         return res;
+    }
+    public boolean deleteNoteTable(){
+        SQLiteDatabase db=this.getReadableDatabase();
+        int affectedRows=db.delete("NOTE",null,null);
+        return affectedRows>0;
     }
     public boolean deleteRollCallTable(){
         SQLiteDatabase db=this.getReadableDatabase();

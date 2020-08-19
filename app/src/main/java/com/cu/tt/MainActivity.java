@@ -10,10 +10,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.DatePicker;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -24,9 +27,16 @@ import android.widget.Toast;
 import com.cu.tt.Alarm.AlarmReceiver;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import static android.view.View.VISIBLE;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout roll_call_btn;
     public TextView weekly;
     ImageView setting;
+    public ImageView back;
 
     @Override
     protected void onStart() {
@@ -43,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);
         boolean res=sp.getBoolean("Toggle",false);
         if(res){
-            sendAlarm();
+           // sendAlarm();
         }
     }
     Handler handler=new Handler();
@@ -62,11 +73,20 @@ public class MainActivity extends AppCompatActivity {
         setBootReceiverEnabled(PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
         finish();
     }
-    @SuppressLint("SetTextI18n")
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        back=findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),NoteActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                finish();
+            }
+        });
         setting=findViewById(R.id.setting);
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,13 +196,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         handler.post(runnable);
-        //sendAlarm();
-        SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);
+        /*SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);
         boolean res=sp.getBoolean("Toggle",false);
         if(res){
             sendAlarm();
         }
-        ///
+         */
         DataBaseHelper db=new DataBaseHelper(this);
         try {
             Cursor resc = db.getVote();
@@ -222,7 +241,6 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -246,19 +264,15 @@ public class MainActivity extends AppCompatActivity {
         }
         time.setText(hr+":"+s+des);
     }
-/*
-    public void setAlarmText(String s) {
-        inst.setAlarmText("Alarm! Time up! Time up!");
-    }
 
+    /*
     public void sendAlarm(){
         DataBaseHelper myDb=new DataBaseHelper(this);
         try {
             Cursor res = myDb.getAllData();
             if (res != null && res.getCount() > 0) {
                 while (res.moveToNext()) {
-                    int day = 0;
-                    try {
+                    int day;
                         Calendar calendar=Calendar.getInstance();
                         day=calendar.get(Calendar.DAY_OF_WEEK);
                         Toast.makeText(getApplicationContext(),day+"", Toast.LENGTH_SHORT).show();
@@ -290,17 +304,11 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 break;
                         }
-                    }catch (Exception e){
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
 
                 }
             }
-            myDb.close();
-
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -308,38 +316,25 @@ public class MainActivity extends AppCompatActivity {
         try {
             int hr=Integer.parseInt(time.split(":")[0]);
             int min=Integer.parseInt(time.split(":")[1].replaceAll("\\D+","").replaceAll("^0+",""));
-            TimePicker timePicker=new TimePicker(this);
-            int currentHour= timePicker.getCurrentHour();
-            int currentMinute=timePicker.getCurrentMinute();
-            if(currentHour==hr && currentMinute==min){
-                sendAlarmConfrim(hr,min);
-            }
-            Toast.makeText(getApplicationContext(),currentHour+"="+hr+"/"+currentMinute+"="+min,Toast.LENGTH_SHORT).show();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, hr);
+            calendar.set(Calendar.MINUTE, min);
+            int _id= (int) System.currentTimeMillis();
+            Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
+            pendingIntent = PendingIntent.getBroadcast(MainActivity.this, _id, intent, 0);
+            alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+            //alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+            //setBootReceiverEnabled(PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+            Toast.makeText(getApplicationContext(),System.currentTimeMillis()+":"+calendar.getTime(),Toast.LENGTH_SHORT).show();
 
         }catch (NumberFormatException nfe){
-            Toast.makeText(getApplicationContext(),nfe.getMessage().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), nfe.getMessage(),Toast.LENGTH_SHORT).show();
 
         }
     }
 
-    private void sendAlarmConfrim(int hr,int min) {
-        try {
-            Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.HOUR_OF_DAY, hr);
-                calendar.set(Calendar.MINUTE, min);
-                Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
-                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
-                alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-                setBootReceiverEnabled(PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
-                Toast.makeText(getApplicationContext(),System.currentTimeMillis()+":"+calendar.getTime(),Toast.LENGTH_SHORT).show();
 
-        }catch (NumberFormatException nfe){
-                Toast.makeText(getApplicationContext(),nfe.getMessage().toString(),Toast.LENGTH_SHORT).show();
-
-            }
-    }
-
- */
     public void sendAlarm(){
         SharedPreferences sp=getApplicationContext().getSharedPreferences("data",Context.MODE_PRIVATE);
         TimePicker timePicker=new TimePicker(this);
@@ -359,8 +354,10 @@ public class MainActivity extends AppCompatActivity {
        // Toast.makeText(getApplicationContext(),ans+"",Toast.LENGTH_SHORT).show();
     }
 
+  */
+
     public void setBootReceiverEnabled(int componentEnabledState){
-        ComponentName componentName=new ComponentName(this,AlarmReceiver.class);
+        ComponentName componentName=new ComponentName(this,MainActivity.class);
         PackageManager packageManager=getPackageManager();
         packageManager.setComponentEnabledSetting(componentName,componentEnabledState,PackageManager.DONT_KILL_APP);
     }

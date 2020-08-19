@@ -108,6 +108,7 @@ public class AddActivity extends AppCompatActivity {
             Intent intent1=new Intent(getApplicationContext(),MainActivity.class);
             intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent1.putExtra("PutDay",title);
+            intent1.putExtra("Anim","off");
             startActivity(intent1);
             finish();
         }else {

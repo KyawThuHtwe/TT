@@ -6,7 +6,8 @@
 
     <color name="black_overlay">#fff</color>
     <color name="detail">#EDE9E9</color>
-    <color name="start">#494A4A</color>
-    <color name="end">#595A5A</color>
+    <color name="start">#039BE5</color>
+    <color name="end">#00ACC1</color>
     <color name="blue">#039BE5</color>
+    <color name="yellow">#FB8C00</color>
 </resources>

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -113,7 +115,11 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                             Toast.makeText(context,"Fail",Toast.LENGTH_SHORT).show();
                         }
                     }
-                    context.getApplicationContext().startActivity(new Intent(context.getApplicationContext(),MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    Intent intent1=new Intent(context.getApplicationContext(),MainActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent1.putExtra("PutDay",myListData.get(position).getDay());
+                    intent1.putExtra("Anim","off");
+                    context.getApplicationContext().startActivity(intent1);
                 }catch (Exception e){
                     //Toast.makeText(context,e.getMessage().toString(),Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -184,7 +190,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
            // Toast.makeText(context,e.getMessage().toString(),Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-
         ////Roll Call
         holder.rollcall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,6 +211,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                                     Intent intent=new Intent(context.getApplicationContext(),MainActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     intent.putExtra("PutDay",myListData.get(position).getDay());
+                                    intent.putExtra("Anim","off");
                                     context.getApplicationContext().startActivity(intent);
                                     //holder.votes();
                                     //Snackbar snackbar=Snackbar.make(holder.idlayout,"Attendance Present", Snackbar.LENGTH_SHORT);
